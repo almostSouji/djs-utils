@@ -1,0 +1,37 @@
+{
+	"name": "srds",
+	"version": "0.0.0",
+	"description": "Discord.js utils",
+	"main": "index.js",
+	"scripts": {
+		"start": "node -r dotenv/config dist/index.js",
+		"build": "tsc",
+		"dev": "ts-node-dev src/index.ts",
+		"lint": "eslint src --ext ts",
+		"lint:fix": "eslint src --ext ts --fix"
+	},
+	"author": "Souji",
+	"dependencies": {
+		"@naval-base/ms": "^3.1.0",
+		"chalk": "^4.1.0",
+		"discord.js": "github:discordjs/discord.js",
+		"dotenv": "^6.0.0",
+		"fetch": "^1.1.0",
+		"lexure": "^0.14.1",
+		"winston": "^3.3.3"
+	},
+	"devDependencies": {
+		"@types/dotenv": "^6.1.1",
+		"@types/node": "^14.0.19",
+		"@types/node-fetch": "^2.5.7",
+		"@types/ws": "^7.2.6",
+		"@typescript-eslint/eslint-plugin": "^2.20.0",
+		"@typescript-eslint/parser": "^2.20.0",
+		"eslint": "^6.8.0",
+		"eslint-config-marine": "^6.0.0",
+		"typescript": "^3.8.3"
+	},
+	"eslintConfig": {
+		"extends": "marine/node"
+	}
+}
