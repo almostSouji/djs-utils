@@ -1,0 +1,23 @@
+name: Lint
+on: [push, pull_request]
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Install Node v12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run TSC
+        run: npm run build 
