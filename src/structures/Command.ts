@@ -44,5 +44,5 @@ export abstract class Command {
 		this.handler = handler;
 	}
 
-	public abstract async execute(message: Message, args: Lexure.Args): Promise<Message|void>;
+	public abstract async execute(message: Message, args?: Lexure.Args): Promise<Message|void>;
 }

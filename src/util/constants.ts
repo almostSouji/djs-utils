@@ -15,6 +15,16 @@ export const ROLES_PATTERN = /<?@?&?(\d{17,19})>?/g;
 export const USERS_PATTERN = /<?@?!?(\d{17,19})>?/g;
 export const SNOWFLAKE_PATTERN = /\d{17, 19}/g;
 
+export const GITHUB = {
+	TRUNCATE_THRESHOLD: 200,
+	BASE: 'https://api.github.com/graphql',
+	EMOJI: {
+		DELETE: '🗑'
+	},
+	REACTION_TIMEOUT: 5000,
+	SOURCES: ['guide', 'discord.js', 'commando', 'discord-api-types', 'website', 'collection', 'rpc', 'opus', 'webhook-filter', 'node-pre-gyp', 'discord.js-next', 'form-data', 'action-webpack', 'action-docs', 'action-eslint', 'erlpack', 'discord-api-docs']
+};
+
 export const COLORS = {
 	SUCCESS: '#03b581',
 	FAIL: '#d04949',
