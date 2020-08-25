@@ -46,16 +46,15 @@ export default class CommandHandler extends EventEmitter {
 	}
 
 	public async handle(message: Message): Promise<Message|void> {
-		const { content, guild, author: { tag }, channel } = message;
+		const { content, guild, author: { tag }, channel, client } = message;
 		const lexer = new Lexure.Lexer(content)
 			.setQuotes([
 				['"', '"'],
 				['“', '”']
 			]);
-
-
 		const prefix = this.client.config.prefix;
-		const r = lexer.lexCommand(s => s.startsWith(prefix) ? prefix.length : null);
+		const prefixRegex = new RegExp(`^(<@!?${client.user!.id}>|${this.escapeRegex(prefix)})\\s*`);
+		const r = lexer.lexCommand(s => prefixRegex.exec(s)?.[0]?.length ?? null);
 		const command = r ? this.resolve(r[0].value) : undefined;
 
 		if (!command) {
@@ -94,5 +93,9 @@ export default class CommandHandler extends EventEmitter {
 
 		this.client.logger.info(`command: ${command.id} by ${tag}`);
 		return command.execute(message, args);
+	}
+
+	private escapeRegex(str: string): string {
+		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 	}
 }
