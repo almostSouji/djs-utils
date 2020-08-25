@@ -5,9 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node -r dotenv/config dist/index.js",
-		"start:db": "node -r dotenv/config dist/test_db.js",
 		"build": "tsc",
-		"dev": "ts-node-dev src/index.ts",
 		"lint": "eslint src --ext ts",
 		"lint:fix": "eslint src --ext ts --fix"
 	},
