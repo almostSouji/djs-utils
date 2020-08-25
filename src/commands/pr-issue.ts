@@ -111,13 +111,13 @@ export default class extends Command {
 		super('pr-issue', handler, {
 			aliases: ['pr', 'issue'],
 			description: {
-				content: 'Retrieve information about the provided issue or pull request. Supported repositories are every repository owned by discord.js and the discord-api-docs respository. Aliases: "g" - "discord.js", "c" - "collection", "dapi" - "discord-api-docs" ',
-				usage: 'repository#issue',
+				content: 'Retrieve information about the provided issue or pull request. Supports every repository owned by discord.js and the discord-api-docs repository.',
+				usage: '<repository>#<issue> [--verbose]',
 				flags: {
 					'`-v`, `--verbose`': 'display more information'
 				}
 			},
-			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
+			clientPermissions: ['EMBED_LINKS']
 		});
 	}
 
