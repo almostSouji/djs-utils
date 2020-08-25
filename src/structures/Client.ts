@@ -1,10 +1,12 @@
 
-import { Client, ClientOptions, Guild, GuildChannel, Role, RoleResolvable, GuildChannelResolvable, BaseManager, User } from 'discord.js';
+import { Client, ClientOptions, Guild, GuildChannel, Role, RoleResolvable, GuildChannelResolvable, BaseManager, User, Collection } from 'discord.js';
 import CommandHandler from '../handlers/CommandHandler';
 import { logger } from '../util/logger';
 import { Logger } from 'winston';
 import EventHandler from '../handlers/EventHandler';
 import { CHANNELS_PATTERN, ROLES_PATTERN, USERS_PATTERN } from '../util/constants';
+import { Sql } from 'postgres';
+import Database, { Tag } from '../structures/Database';
 
 interface UtilConfig {
 	prefix: string;
@@ -16,6 +18,8 @@ declare module 'discord.js' {
 		readonly commands: CommandHandler;
 		readonly config: UtilConfig;
 		readonly logger: Logger;
+		readonly sql: Sql<{}>;
+		readonly tagCache: Collection<string, Tag>;
 		resolveRole(guild: Guild, query?: string): Role | undefined;
 		resolveChannel(guild: Guild, types: GuildChannelType[], query?: string): GuildChannel | undefined;
 	}
@@ -28,9 +32,14 @@ export class UtilsClient extends Client {
 	public readonly events = new EventHandler(this);
 	public readonly config: UtilConfig;
 	public readonly logger = logger;
+	public readonly sql: Sql<{}>;
+	public readonly tagCache = new Collection<string, Tag>();
 	public constructor(config: UtilConfig, clientOptions: ClientOptions = {}) {
 		super(clientOptions);
 		this.config = config;
+		const db = new Database(this);
+		this.sql = db.sql;
+		db.init().catch(e => this.logger.error('DB_INIT', e));
 	}
 
 	private resolveFromManager<T extends GuildChannel | Role, S extends GuildChannelResolvable | RoleResolvable>(query: string, reg: RegExp, manager: BaseManager<string, T, S>, predicate?: (p1: T) => boolean): T | undefined {

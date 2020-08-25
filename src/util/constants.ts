@@ -94,6 +94,23 @@ export const MESSAGES = {
 			WAITING: 'waiting for API response...',
 			SUCCESS: (heartbeat: number, latency: number) => `${PREFIXES.SUCCESS}pong! Api latency is ${latency}ms. Average websocket heartbeat: ${heartbeat}ms.`
 		},
+		LOAD: {
+			FAIL: `${PREFIXES.FAIL}Something went wrong, check console.`,
+			NO_TAGS: 'No tags inserted.',
+			NO_YAML: `${PREFIXES.FAIL}No .yaml file provided.`,
+			RESET: '`[✔]` Database cleared.',
+			RESET_FAIL: '`[✘]` Databse could not be cleared.',
+			FINISHED: '`[✔]` Tag insertion finished.',
+			REPORT: (ok: number, fail: number) => `**Report:**\nOK: ${ok}\nFail: ${fail}`
+		},
+		RELOAD: {
+			FAIL: `${PREFIXES.FAIL}Something went wrong, check console.`,
+			SUCCESS: `${PREFIXES.SUCCESS} Reloaded tags.`
+		},
+		TAG: {
+			NO_TAG: (tag: string) => `${PREFIXES.FAIL}There is no tag with the name \`${tag}\``,
+			NOTICE: 'Tags are occasionally synchronized with discord.js official and may not be up to date'
+		},
 		DOCS: {
 			ERRORS: {
 				NONE_FOUND: (query: string) => `${PREFIXES.ERROR}Could not find the requested information for \`${query}\`.`

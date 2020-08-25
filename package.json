@@ -1,10 +1,11 @@
 {
-	"name": "srds",
+	"name": "djs-utils",
 	"version": "0.0.0",
 	"description": "Discord.js utils",
 	"main": "index.js",
 	"scripts": {
 		"start": "node -r dotenv/config dist/index.js",
+		"start:db": "node -r dotenv/config dist/test_db.js",
 		"build": "tsc",
 		"dev": "ts-node-dev src/index.ts",
 		"lint": "eslint src --ext ts",
@@ -17,11 +18,14 @@
 		"discord.js": "github:discordjs/discord.js",
 		"dotenv": "^6.0.0",
 		"fetch": "^1.1.0",
+		"js-yaml": "^3.14.0",
 		"lexure": "^0.14.1",
+		"postgres": "github:porsager/postgres#v2.0.0-beta.0",
 		"winston": "^3.3.3"
 	},
 	"devDependencies": {
 		"@types/dotenv": "^6.1.1",
+		"@types/js-yaml": "^3.12.5",
 		"@types/node": "^14.0.19",
 		"@types/node-fetch": "^2.5.7",
 		"@types/ws": "^7.2.6",

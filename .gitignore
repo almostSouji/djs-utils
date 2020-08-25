@@ -1,5 +1,5 @@
 #credentials
-.env
+*.env
 
 # indev
 dist

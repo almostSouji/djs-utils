@@ -15,6 +15,13 @@ export default class extends Event {
 		const groups = regex.exec(message.content)?.groups;
 
 		if (!groups) {
+			const { client } = this.handler;
+			const match = client.commands.prefixRegExp.exec(message.content)?.[0] ?? null;
+			if (match) {
+				const command = this.handler.client.commands.resolve('tag');
+				command?.execute(message, undefined, message.content.replace(match, ''));
+				return true;
+			}
 			return false;
 		}
 		const command = this.handler.client.commands.resolve('pr-issue');
