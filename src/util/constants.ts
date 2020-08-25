@@ -76,13 +76,7 @@ export const MESSAGES = {
 		},
 		DOCS: {
 			ERRORS: {
-				MISSING_PERMISSIONS: (guild: string) => `${PREFIXES.ERROR}You are not authorized to set default logs for \`${guild}\``,
-				INVALID_DOCS: (invalidDefault: string, sources: string[]) => `${PREFIXES.ERROR}Can not set default docs to \`${invalidDefault}\`. Please pick one of: ${sources.map(source => `\`${source}\``).join(', ')}.`,
 				NONE_FOUND: (query: string) => `${PREFIXES.ERROR}Could not find the requested information for \`${query}\`.`
-			},
-			SUCESS: {
-				SET_DEFAULT: (guild: string, newDefault: string) => `${PREFIXES.SUCCESS}Set the default docs for \`${guild}\` to \`${newDefault}\`.`
-
 			}
 		}
 	}
