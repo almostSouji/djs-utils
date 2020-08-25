@@ -15,8 +15,7 @@ export default class extends Command {
 				content: 'Shows a tag',
 				usage: '<tagname|tagalias>',
 				flags: {}
-			},
-			ownerOnly: true
+			}
 		});
 	}
 
