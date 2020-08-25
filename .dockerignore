@@ -1,1 +1,20 @@
-/dist
+# Packages
+node_modules/
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+
+# Authentication
+.env
+.env.example
+
+# Git
+.github
+.git
+.gitignore
+LICENSE

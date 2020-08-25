@@ -10,13 +10,12 @@ services:
     ports:
       - '8001:5432'
   bot:
-    image: djs-utils
     build:
       context: ./
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file:
-      - ./.env
+      - ./src/.env
     links:
       - 'database'
       - 'database:db'
