@@ -4,12 +4,12 @@ import { join } from 'path';
 import * as chalk from 'chalk';
 import { EventEmitter } from 'events';
 import { Event } from '../structures/Event';
+import { Collection } from 'discord.js';
 
 export default class EventHandler {
-	private readonly events = new Map<string, Event>();
+	private readonly events = new Collection<string, Event>();
 	public readonly client: UtilsClient;
-	public readonly emitters = new Map<string, EventEmitter>();
-
+	public readonly emitters = new Collection<string, EventEmitter>();
 	public constructor(client: UtilsClient) {
 		this.client = client;
 		this.emitters.set('client', client);

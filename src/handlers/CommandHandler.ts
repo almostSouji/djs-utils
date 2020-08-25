@@ -3,12 +3,12 @@ import { join } from 'path';
 import { readdirSync } from 'fs';
 import * as Lexure from 'lexure';
 import { UtilsClient } from '../structures/Client';
-import { Message, User, TextChannel, Permissions } from 'discord.js';
+import { Message, User, TextChannel, Permissions, Collection } from 'discord.js';
 import * as chalk from 'chalk';
 import { EventEmitter } from 'events';
 
 export default class CommandHandler extends EventEmitter {
-	private readonly commands = new Map<string, Command>();
+	public readonly commands = new Collection<string, Command>();
 	public readonly client: UtilsClient;
 
 	public constructor(client: UtilsClient) {
