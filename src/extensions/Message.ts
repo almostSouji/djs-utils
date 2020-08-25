@@ -4,6 +4,7 @@ declare module 'discord.js' {
 	export interface Message {
 		response: Message | null;
 		answer(content?: string, options?: MessageOptions | MessageAdditions): Promise<Message>;
+		readonly useEmbed: boolean;
 	}
 }
 
@@ -23,6 +24,11 @@ export default Structures.extend(
 				const answer = await this.channel.send(content, options);
 				this.response = answer;
 				return answer;
+			}
+
+			public get useEmbed(): boolean {
+				if (this.channel instanceof DMChannel) return true;
+				return this.channel.permissionsFor(this.client.user!)?.has('EMBED_LINKS') ?? false;
 			}
 
 			private transformOptions(options?: MessageOptions | MessageAdditions): MessageEditOptions {

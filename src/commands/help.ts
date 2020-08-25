@@ -30,7 +30,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, args: Lexure.Args): Promise<Message|void> {
-		const useEmbed = message.channel instanceof DMChannel || message.channel.permissionsFor(message.client.user!)?.has('EMBED_LINKS');
+		const useEmbed = message.useEmbed;
 		const rest = Lexure.joinTokens(args.many(), null, true);
 
 		const command = this.handler.resolve(rest);
