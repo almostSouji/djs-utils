@@ -340,7 +340,7 @@ export default class extends Command {
 			}
 
 			// delete reaction handling
-			if (message.channel instanceof DMChannel || !message.channel.permissionsFor(message.guild!.me!)!.has(['ADD_REACTIONS', 'MANAGE_MESSAGES'], false)) {
+			if (message.channel instanceof DMChannel || !message.channel.permissionsFor(message.guild!.me!)!.has(['ADD_REACTIONS', 'MANAGE_MESSAGES', 'READ_MESSAGE_HISTORY'], false)) {
 				return message.answer('', embed.shorten());
 			}
 			const msg = await message.answer('', embed.shorten());
