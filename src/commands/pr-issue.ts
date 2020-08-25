@@ -241,7 +241,6 @@ export default class extends Command {
 			});
 			const body = await res.json();
 			if (!body?.data?.repository?.issueOrPullRequest) {
-				console.log('no such thing', body);
 				return;
 			}
 			const d = body.data.repository.issueOrPullRequest;
@@ -269,7 +268,7 @@ export default class extends Command {
 			}
 
 			// reviews
-			const unique = this.uniqueReviews(d.reviews.nodes, d.author.login);
+			const unique = this.uniqueReviews(d.author.login, d.reviews?.nodes);
 			if (unique.length) {
 				let reviewString = '';
 				for (const review of unique) {
@@ -376,7 +375,7 @@ export default class extends Command {
 		const boxRegex = /- \[x\]/gi;
 		const emptyBoxRegex = /- \[ \]/gi;
 		const multiLinebreakRegex = /\n(?:\s*\n)+/gmi;
-		console.log(body);
+
 		let formatted = body
 			.replace(commentRegex, '')
 			.replace(multiLinebreakRegex, '\n\n');
@@ -388,7 +387,8 @@ export default class extends Command {
 		return formatted;
 	}
 
-	private uniqueReviews(reviews: Review[], author: string): Review[] {
+	private uniqueReviews(author: string, reviews?: Review[]): Review[] {
+		if (!reviews) return [];
 		const uniqueReviews: Record<string, Review[]> = {};
 		for (const review of reviews) {
 			if (review.author.login === author) {
