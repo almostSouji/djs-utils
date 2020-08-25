@@ -245,8 +245,6 @@ export default class extends Command {
 				return;
 			}
 			const d = body.data.repository.issueOrPullRequest;
-			console.log(d); // <- DEBUG
-
 			const embed = new Embed();
 
 			// header
@@ -360,7 +358,7 @@ export default class extends Command {
 			react.first()!.message.delete();
 			return;
 		} catch (e) {
-			console.log('oops...', e); // <-- DEBUG:
+			this.handler.client.logger.error(`[${this.id}]`, e);
 		}
 	}
 
