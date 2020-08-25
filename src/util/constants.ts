@@ -34,7 +34,12 @@ export const COLORS = {
 export const PREFIXES = {
 	FAIL: '',
 	ERROR: '',
-	SUCCESS: ''
+	SUCCESS: '',
+	COMMAND_USAGE: {
+		BLOCKED: '❌',
+		ALLOWED: '✅',
+		UNKNOWN: '❔'
+	}
 };
 
 export const SUFFIXES = {
@@ -60,6 +65,10 @@ export const DOCS = {
 	REACTION_TIMEOUT: 5000
 };
 
+export const HELP = {
+	TRUNCATE_THRESHOLD: 50
+};
+
 export const MESSAGES = {
 	COMMANDS: {
 		COMMON: {
@@ -69,6 +78,17 @@ export const MESSAGES = {
 				USAGE: (usage: string) => `${PREFIXES.FAIL}Command usage: \`${usage}\`.`,
 				RESOLVE: (query: string, type: string) => `${PREFIXES.FAIL}I can not resolve \`${query}\` to a \`${type}\`.`
 			}
+		},
+		HELP: {
+			AVAILABLE: 'Your available commands are',
+			BLOCKED: {
+				DM_ONLY: 'direct message only',
+				GUILD_ONLY: 'in servers only',
+				OWNER_ONLY: 'owner only'
+			},
+			MORE_INFO: (prefix: string, cmd: string) => `You can use \`${prefix}${cmd} <command>\` to get more information about a specific command`,
+			FILTERED_INFO: 'These are only the commands you can use in this channel, if you want to see all commands use the --all flag!',
+			ALL: 'These are all commands!'
 		},
 		PING: {
 			WAITING: 'waiting for API response...',
