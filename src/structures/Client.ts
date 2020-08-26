@@ -33,13 +33,13 @@ export class UtilsClient extends Client {
 	public readonly config: UtilConfig;
 	public readonly logger = logger;
 	public readonly sql: Sql<{}>;
+	private readonly db: Database;
 	public readonly tagCache = new Collection<string, Tag>();
 	public constructor(config: UtilConfig, clientOptions: ClientOptions = {}) {
 		super(clientOptions);
 		this.config = config;
-		const db = new Database(this);
-		this.sql = db.sql;
-		db.init().catch(e => this.logger.error('DB_INIT', e));
+		this.db = new Database(this);
+		this.sql = this.db.sql;
 	}
 
 	private resolveFromManager<T extends GuildChannel | Role, S extends GuildChannelResolvable | RoleResolvable>(query: string, reg: RegExp, manager: BaseManager<string, T, S>, predicate?: (p1: T) => boolean): T | undefined {
@@ -102,5 +102,10 @@ export class UtilsClient extends Client {
 				return undefined;
 			}
 		}
+	}
+
+	public async init(token: string) {
+		await this.db.init();
+		await this.login(token);
 	}
 }

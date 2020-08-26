@@ -21,8 +21,7 @@ async function init() {
 	for (const ext of extensions.filter(file => ['.js', '.ts'].includes(extname(file)))) {
 		await import(join(__dirname, './extensions', ext));
 	}
-
-	client.login(TOKEN);
+	await client.init(TOKEN!);
 }
 
 init();
