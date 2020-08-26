@@ -18,3 +18,6 @@ npm-debug.log*
 .git
 .gitignore
 LICENSE
+
+# Dist
+dist/
