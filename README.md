@@ -45,6 +45,7 @@ Usage: `!load [--reset]`
 
 Flags:
 - `--reset` `-r` Reset the tag database before loading
+- `--cache` `-c` Update tag cache after loading successfully (runs `reload` command after `load`)
 
 ### ping
 

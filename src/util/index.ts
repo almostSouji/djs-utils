@@ -11,4 +11,15 @@ function ellipsis(text: string, length: number): string {
 	return text;
 }
 
-export { ellipsis };
+/**
+ * Return a Promise which resolves after the specified time
+ * @param ms Time to pause for in milliseconds
+ * @returns {Promise} A promise which resolves after the specified time
+ */
+function pause(ms: number): Promise<void> {
+	return new Promise(resolve => {
+		  setTimeout(resolve, ms);
+	});
+}
+
+export { ellipsis, pause };

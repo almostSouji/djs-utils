@@ -2,9 +2,10 @@ import { Command } from '../structures/Command';
 import CommandHandler from '../handlers/CommandHandler';
 import { Message } from 'discord.js';
 import { safeLoad } from 'js-yaml';
-import { MESSAGES } from '../util/constants';
+import { MESSAGES, LOAD } from '../util/constants';
 import fetch from 'node-fetch';
 import * as Lexure from 'lexure';
+import { pause } from '../util';
 
 const { COMMANDS } = MESSAGES;
 
@@ -25,9 +26,10 @@ export default class extends Command {
 			aliases: ['load', 'loadbackup', 'loadtags'],
 			description: {
 				content: 'Load tags from a backup YAML file (file-command)',
-				usage: '',
+				usage: '[--reset] [--cache]',
 				flags: {
-					'`-r`, `--reset`': 'reset tag database before loading'
+					'`-r`, `--reset`': 'reset tag database before loading',
+					'`-c`, `--cache`': 'update tag cache'
 				}
 			},
 			ownerOnly: true
@@ -37,6 +39,7 @@ export default class extends Command {
 	public async execute(message: Message, args: Lexure.Args): Promise<Message|void> {
 		const { client } = this.handler;
 		const reset = args.flag('r', 'reset');
+		const cache = args.flag('c', 'cache');
 		const url = message.attachments.first()?.url;
 		if (!url?.toLocaleLowerCase().endsWith('.yaml')) {
 			message.answer(COMMANDS.LOAD.NO_YAML);
@@ -85,6 +88,14 @@ export default class extends Command {
 			}
 			status.push('', COMMANDS.LOAD.REPORT(ok, fail));
 			await this.update(message, status);
+
+			if (cache) {
+				await pause(LOAD.WAIT_DURATION);
+				const reloadCmd = this.handler.resolve('reload');
+				if (reloadCmd) {
+					reloadCmd.execute(message);
+				}
+			}
 		} catch (err) {
 			client.logger.error('TAG_LOAD', err);
 			status.push(COMMANDS.LOAD.FAIL);

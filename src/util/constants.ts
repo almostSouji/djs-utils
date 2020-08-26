@@ -19,6 +19,10 @@ export const TAG = {
 	TRUNCATE_THRESHOLD: 30
 };
 
+export const LOAD = {
+	WAIT_DURATION: 3000
+};
+
 export const GITHUB = {
 	TRUNCATE_THRESHOLD: 200,
 	BASE: 'https://api.github.com/graphql',
