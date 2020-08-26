@@ -1,6 +1,6 @@
 FROM node:12-alpine
-LABEL name "DiscordJS Util Bot"
-LABEL version "0.0.0"
+LABEL name "djs-utils"
+LABEL version "0.1.0"
 LABEL maintainer "almostSouji <https://github.com/almostSouji>"
 ENV TOKEN=\
 	OWNER=\
