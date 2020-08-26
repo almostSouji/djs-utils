@@ -15,6 +15,10 @@ export const ROLES_PATTERN = /<?@?&?(\d{17,19})>?/g;
 export const USERS_PATTERN = /<?@?!?(\d{17,19})>?/g;
 export const SNOWFLAKE_PATTERN = /\d{17, 19}/g;
 
+export const TAG = {
+	TRUNCATE_THRESHOLD: 30
+};
+
 export const GITHUB = {
 	TRUNCATE_THRESHOLD: 200,
 	BASE: 'https://api.github.com/graphql',
@@ -108,8 +112,10 @@ export const MESSAGES = {
 			SUCCESS: `${PREFIXES.SUCCESS} Reloaded tags.`
 		},
 		TAG: {
+			NO_QUERY: `${PREFIXES.FAIL}No query provided`,
 			NO_TAG: (tag: string) => `${PREFIXES.FAIL}There is no tag with the name \`${tag}\``,
-			NOTICE: 'Tags are occasionally synchronized with discord.js official and may not be up to date'
+			NOTICE: 'Tags are occasionally synchronized with discord.js official and may not be up to date',
+			TRUNCATE_NOTICE: `The response only includes ${TAG.TRUNCATE_THRESHOLD} tags, try to be more specific if that's not enough.`
 		},
 		DOCS: {
 			ERRORS: {
