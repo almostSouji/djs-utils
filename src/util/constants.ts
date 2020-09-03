@@ -24,7 +24,6 @@ export const LOAD = {
 };
 
 export const GITHUB = {
-	TRUNCATE_THRESHOLD: 200,
 	BASE: 'https://api.github.com/graphql',
 	EMOJI: {
 		DELETE: '🗑'

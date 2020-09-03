@@ -10,7 +10,7 @@ const { GITHUB_API_KEY } = process.env;
 const { EMOJI, REACTION_TIMEOUT } = GITHUB;
 
 interface Review {
-	author: {login: string};
+	author: { login: string };
 	url: string;
 	state: string;
 	authorAssociation: string;
@@ -20,8 +20,8 @@ interface Review {
 const ALIASES: Record<string, string> = {
 	g: 'discord.js',
 	c: 'collection',
-	dapi: 'discord-api-docs'
-
+	dapi: 'discord-api-docs',
+	next: 'discord.js-next'
 };
 
 const STATE_COLORS: Record<string, string> = {
@@ -40,71 +40,52 @@ const TIMESTAMPS: Record<string, string> = {
 
 const ICONS: Record<string, Record<string, string>> = {
 	PR: {
-		OPEN: 'https://cdn.discordapp.com/emojis/475626078384160768.png',
-		CLOSED: 'https://cdn.discordapp.com/emojis/618558804107329569.png',
-		MERGED: 'https://cdn.discordapp.com/emojis/477529099347165235.png',
-		DRAFT: 'https://cdn.discordapp.com/emojis/747149855381520425.png'
+		OPEN: 'https://cdn.discordapp.com/emojis/751210109333405727.png',
+		CLOSED: 'https://cdn.discordapp.com/emojis/751210080459817092.png',
+		MERGED: 'https://cdn.discordapp.com/emojis/751210169609748481.png?v=1',
+		DRAFT: 'https://cdn.discordapp.com/emojis/751210097463525377.png'
 	},
 	ISSUE: {
-		OPEN: 'https://cdn.discordapp.com/emojis/475626077897621537.png',
-		CLOSED: 'https://cdn.discordapp.com/emojis/475626078296211456.png'
+		OPEN: 'https://cdn.discordapp.com/emojis/751210140086042686.png?v=1',
+		CLOSED: 'https://cdn.discordapp.com/emojis/751210129977901100.png'
 	}
 };
 
 const LABEL_COLORS: Record<string, string> = {
-	'159818': '<:159818:747336812154060811>',
-	'006b75': '<:006b75:747336776556871725>',
-	'31e097': '<:31e097:747336784626581554>',
-	'84b6eb': '<:84b6eb:747336791308238938>',
-	'7289DA': '<:7289DA:747336800661536768>',
-	'af310e': '<:af310e:747336823335944193>',
-	'b60205': '<:b60205:747336832748093500>',
-	'c5def5': '<:c5def5:747336844211126352>',
-	'cc317c': '<:cc317c:747336853891448862>',
-	'd11f1f': '<:d11f1f:747336863060066385>',
-	'd93f0b': '<:d93f0b:747336873705472144>',
-	'eebcff': '<:eebcff:747336882521767946>',
-	'ef6556': '<:ef6556:747336891891843072>',
-	'f8f8f8': '<:f8f8f8:747336919138172998>',
-	'fc9d2f': '<:fc9d2f:747336931276488815>',
-	'ff8800': '<:ff8800:747336941250281563>',
-	'ffb766': '<:ffb766:747336953170755635>',
-	'ffc9c9': '<:ffc9c9:747336964143054919>',
-	'ffe900': '<:ffe900:747336974331019265>',
-	'fff0db': '<:fff0db:747336984175050812>',
-	'0e8a16': '<:0e8a16:747352912077914133>',
-	'128A0C': '<:128A0C:747352932650975232>',
-	'5319e7': '<:5319e7:747352942335492176>',
-	'061282': '<:061282:747352951802298448>',
-	'bfdadc': '<:bfdadc:747352959528206416>',
-	'cccccc': '<:cccccc:747352967140737037>',
-	'd4c5f9': '<:d4c5f9:747352975491465326>',
-	'e6e6e6': '<:e6e6e6:747352984366743612>',
-	'e99695': '<:e99695:747352992658882632>',
-	'ee0701': '<:ee0701:747353006617395211>',
-	'fbca04': '<:fbca04:747353015891263598>',
-	'ffffff': '<:ffffff:747353024145653762>',
-	'def': '<:def:747337447834386493>'
+	'1d637f': '<:1d637f:751210249721217155>',
+	'4b1f8e': '<:4b1f8e:751210257811767297>',
+	'7ef7ef': '<:7ef7ef:751210266217414768>',
+	'027b69': '<:027b69:751210290846367825>',
+	'0075ca': '<:0075ca:751210299394359316>',
+	'276bd1': '<:276bd1:751210308500062310>',
+	'7057ff': '<:7057ff:751210318385905724>',
+	'aed5fc': '<:aed5fc:751210330020905003>',
+	'b6b1f9': '<:b6b1f9:751210340577968199>',
+	'c10f47': '<:c10f47:751210349918683249>',
+	'c66037': '<:c66037:751210359477764126>',
+	'cfd3d7': '<:cfd3d7:751210367430033489>',
+	'd73a4a': '<:d73a4a:751210378981015565>',
+	'd876e3': '<:d876e3:751210389143814274>',
+	'e4e669': '<:e4e669:751210418999001128>',
+	'e4f486': '<:e4f486:751210427777679362>',
+	'e8be8b': '<:e8be8b:751210441707094036>',
+	'ea8785': '<:ea8785:751210466033795274>',
+	'f06dff': '<:f06dff:751210476523749487>',
+	'fbca04': '<:fbca04:751210487508762675>',
+	'fc1423': '<:fc1423:751210498950955048>',
+	'fcf95a': '<:fcf95a:751210515203620928>',
+	'ffccd7': '<:ffccd7:751210528021544991>',
+	'ffffff': '<:ffffff:751210537597272076>',
+	'default': '<:default:751211609430425611>'
 };
 
-const REVIEW_STATES: Record<string, Record<string, string>> = {
-	MEMBER: {
-		APPROVED: '<:check:747365034069327922>',
-		PENDING: '<:review:747431363774251098>',
-		COMMENTED: '<:eye:747384374168780841>',
-		CHANGES_REQUESTED: '<:diff:747362834572116018>'
-	},
-	GUEST: {
-		APPROVED: '<:check_grey:747425995048484925>',
-		PENDING: '<:review_grey:747431373383401594>',
-		COMMENTED: '<:eye:747384374168780841>',
-		CHANGES_REQUESTED: '<:diff_grey:747425985598717984>'
-	}
+const BADGES = {
+	DJS: '<:DiscordJS:751202824804630539>'
 };
 
 const TICK_STATES = {
 	TICK: '<:tick:747502128003809332>',
-	NO_TICK: '<:notick:747502148815814881>'
+	NO_TICK: '<:notick:751200038323093521>'
 };
 export default class extends Command {
 	public constructor(handler: CommandHandler) {
@@ -121,7 +102,7 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, args?: Lexure.Args): Promise<Message|void> {
+	public async execute(message: Message, args?: Lexure.Args): Promise<Message | void> {
 		const rest = args ? Lexure.joinTokens(args.many()) : message.content;
 		const useEmoji = message.channel instanceof DMChannel ? true : (message.channel.permissionsFor(message.client.user!)?.has('USE_EXTERNAL_EMOJIS') ?? false);
 		const regex = /(?<repo>\S+)#(?<num>\d+) ?(?<verbose>(--verbose|-verbose|--v|-v))?/i;
@@ -272,17 +253,11 @@ export default class extends Command {
 			if (unique.length) {
 				let reviewString = '';
 				for (const review of unique) {
-					if (useEmoji) {
-						const icon = this.state(review.state, review.authorAssociation);
-						reviewString += `${icon} `;
+					if (owner === 'discordjs' && ['MEMBER', 'OWNER', 'COLLABORATOR'].includes(review.authorAssociation)) {
+						reviewString += useEmoji ? `${BADGES.DJS} ` : '(Discord.js) ';
 					}
 					reviewString += `[${review.author.login}](${review.url})`;
-					if (!useEmoji) {
-						reviewString += ` ${review.state.toLowerCase().replace(/_/g, ' ')}`;
-						if (['MEMBER', 'OWNER', 'COLLABORATOR'].includes(review.authorAssociation)) {
-							reviewString += ' 📌';
-						}
-					}
+					reviewString += ` ${review.state.toLowerCase().replace(/_/g, ' ')}`;
 					reviewString += `\n`;
 				}
 				let reviewHeading = 'Reviews';
@@ -294,7 +269,11 @@ export default class extends Command {
 
 			// labels
 			if (d.labels?.nodes?.length) {
-				embed.addField('Labels', d.labels.nodes.map((l: {name: string; color: string; url: string}) => `${useEmoji ? `${this.label(l.color)} ` : ''}[${l.name}](${l.url})`).join(' '));
+				if (useEmoji) {
+					embed.addField('Labels', d.labels.nodes.map((l: { name: string; color: string; url: string }) => `${this.label(l.color)}[${l.name}](${l.url})`).join(' '));
+				} else {
+					embed.addField('Labels', d.labels.nodes.map((l: { name: string; color: string; url: string }) => `[${l.name}](${l.url})`).join(', '));
+				}
 			}
 
 			// icon
@@ -362,12 +341,7 @@ export default class extends Command {
 	}
 
 	private label(color: string): string {
-		return LABEL_COLORS[color] ?? LABEL_COLORS.def;
-	}
-
-	private state(state: string, assoc: string): string {
-		const reviewer = ['MEMBER', 'OWNER', 'COLLABORATOR'].includes(assoc) ? 'MEMBER' : 'GUEST';
-		return REVIEW_STATES[reviewer][state];
+		return LABEL_COLORS[color] ?? LABEL_COLORS.default;
 	}
 
 	private formatBody(body: string, useEmoji: boolean): string {
