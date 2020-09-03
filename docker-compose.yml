@@ -3,6 +3,7 @@ version: '3'
 services:
   database:
     image: postgres
+    restart: always
     env_file:
       - ./database.env
     volumes: 
@@ -13,7 +14,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    restart: unless-stopped
+    restart: always
     env_file:
       - ./src/.env
     links:
