@@ -17,11 +17,11 @@ export default Structures.extend(
 				this.response = null;
 			}
 
-			public async answer(content?: string, options?: MessageOptions | MessageAdditions): Promise<Message> {
+			public async answer(content?: string, options?: MessageOptions & {split?: false} | MessageAdditions): Promise<Message> {
 				if (this.response && !this.response.deleted) {
 					return this.response.edit(content, this.transformOptions(options));
 				}
-				const answer = await this.channel.send(content, options);
+				const answer = await this.channel.send(content, options ?? []);
 				this.response = answer;
 				return answer;
 			}
