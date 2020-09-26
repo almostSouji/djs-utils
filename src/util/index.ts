@@ -1,14 +1,18 @@
 /**
  * Shorten text with ellipsis (returns input if short enough)
  * @param {string} text Text to shorten
- * @param {number} length Length to shorten to (without ellipsis)
+ * @param {number} total Length to shorten to (without ellipsis)
  * @returns {string} Shortened text
  */
-function ellipsis(text: string, length: number): string {
-	if (text.length > length) {
-		return `${text.slice(0, length - 3)}...`;
+function ellipsis(text: string, total: number): string {
+	if (text.length <= total) {
+		return text;
 	}
-	return text;
+	const keep = total - 3;
+	if (keep < 1) {
+		return text.slice(0, total);
+	}
+	return `${text.slice(0, keep)}...`;
 }
 
 /**
@@ -22,4 +26,13 @@ function pause(ms: number): Promise<void> {
 	});
 }
 
-export { ellipsis, pause };
+/**
+ * Return an array of unique values that's also cleaned of undefined values
+ * @param input Array to handle
+ * @returns {T[]} Cleaned array of unique values
+ */
+function uniqueValidatedValues<T>(input: T[]): T[] {
+	return Array.from(new Set(input)).filter(element => element ?? false);
+}
+
+export { ellipsis, pause, uniqueValidatedValues };

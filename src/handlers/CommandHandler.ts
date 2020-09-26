@@ -1,4 +1,4 @@
-import { Command } from '../structures/Command';
+import { Command, ExecutionContext } from '../structures/Command';
 import { join } from 'path';
 import { readdirSync } from 'fs';
 import * as Lexure from 'lexure';
@@ -91,7 +91,7 @@ export default class CommandHandler extends EventEmitter {
 		const args = new Lexure.Args(res);
 
 		this.client.logger.info(`command: ${command.id} by ${tag}`);
-		return command.execute(message, args);
+		return command.execute(message, args, '', ExecutionContext['PREFIXED']);
 	}
 
 	private escapeRegex(str: string): string {

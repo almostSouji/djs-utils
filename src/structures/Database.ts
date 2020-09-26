@@ -37,6 +37,13 @@ export default class PG {
 					updatedAt	timestamp
 				);
 			`;
+
+			await sql`
+				create table if not exists repository_aliases(
+					guild	varchar(19) primary key,
+					aliases	text[]
+				)
+			`;
 		});
 
 		const settingsRes = await this.sql`

@@ -17,13 +17,21 @@ export default Structures.extend(
 				this.response = null;
 			}
 
-			public async answer(content?: string, options?: MessageOptions | MessageAdditions): Promise<Message> {
+			public async answer(content?: string, options?: (MessageOptions & { split?: false }) | MessageAdditions): Promise<Message> {
 				if (this.response && !this.response.deleted) {
 					return this.response.edit(content, this.transformOptions(options));
 				}
-				const answer = await this.channel.send(content, options);
-				this.response = answer;
-				return answer;
+
+				if (options) {
+					this.response = await this.channel.send(content, options);
+					return this.response;
+				}
+
+				if (!content) {
+					throw new Error('No content');
+				}
+				this.response = await this.channel.send(content);
+				return this.response;
 			}
 
 			public get useEmbed(): boolean {

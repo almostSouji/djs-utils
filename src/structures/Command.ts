@@ -22,6 +22,12 @@ interface CommandOptions {
 	userPermissions?: BitFieldResolvable<PermissionString>;
 }
 
+export enum ExecutionContext {
+	PREFIXED,
+	REGEXP,
+	TAG_MATCH
+}
+
 export abstract class Command {
 	public id: string;
 	public aliases: string[];
@@ -32,6 +38,7 @@ export abstract class Command {
 	public clientPermissions: BitFieldResolvable<PermissionString>;
 	public userPermissions: BitFieldResolvable<PermissionString>;
 	public handler: CommandHandler;
+	public regExp?: RegExp;
 	public constructor(id: string, handler: CommandHandler, data: CommandOptions) {
 		this.id = id;
 		this.aliases = data?.aliases ?? [];
@@ -44,5 +51,5 @@ export abstract class Command {
 		this.handler = handler;
 	}
 
-	public abstract async execute(message: Message, args?: Lexure.Args, special?: string): Promise<Message|void>;
+	public abstract async execute(message: Message, args?: Lexure.Args, special?: string, executionContext?: ExecutionContext): Promise<Message|void>;
 }
