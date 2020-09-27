@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { Message, DMChannel } from 'discord.js';
 import { MESSAGES, MESSAGE_CONTENT_LIMIT } from '../../util/constants';
 import { Sql } from 'postgres';
 const { COMMANDS } = MESSAGES;
@@ -115,6 +115,11 @@ function cleanAliasCandidates(inputs: string[], predicate: (current: string) => 
 	return inputs.map(i => resolveAlias(i)).filter(e => e && predicate(e)) as string[];
 }
 
+function checkEditPermissions(message: Message, args: Args): boolean {
+	if (args.flag('force', 'f') && message.client.commands.isOwner(message.author)) return true;
+	if (message.channel instanceof DMChannel) return false;
+	return message.channel.permissionsFor(message.author)?.any(['MANAGE_GUILD', 'ADMINISTRATOR']) ?? false;
+}
 
 export async function alias(message: Message, args: Args, sql: Sql<any>) {
 	if (!message.guild) {
@@ -134,6 +139,11 @@ export async function alias(message: Message, args: Args, sql: Sql<any>) {
 
 	switch (sub) {
 		case 'add': {
+			if (!checkEditPermissions(message, args)) {
+				message.answer(COMMANDS.GITHUB.ALIAS.ERRORS.PERMISSIONS);
+				return;
+			}
+
 			const predicate = (s: string) => !current.some(c => {
 				const [alias] = c.split(':');
 				return alias === s;
@@ -144,6 +154,11 @@ export async function alias(message: Message, args: Args, sql: Sql<any>) {
 
 		case 'remove':
 		case 'delete': {
+			if (!checkEditPermissions(message, args)) {
+				message.answer(COMMANDS.GITHUB.ALIAS.ERRORS.PERMISSIONS);
+				return;
+			}
+
 			const cleaned = cleanAliasCandidates(candidates, () => true);
 			return remove(message, current, cleaned, sql);
 		}

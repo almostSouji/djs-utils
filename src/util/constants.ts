@@ -104,7 +104,8 @@ export const MESSAGES = {
 				ERRORS: {
 					NO_GUILD: `${PREFIXES.FAIL}Please use this command in the server you want to edit settings for`,
 					NO_SUB: (validCommands: string) => `${PREFIXES.FAIL}Missing sub-command, valid arguments are ${validCommands}.`,
-					INVALID_SUB: (command: string, validCommands: string) => `${PREFIXES.FAIL}Invalid sub-command \`${command}\`. Valid arguments are: ${validCommands}`
+					INVALID_SUB: (command: string, validCommands: string) => `${PREFIXES.FAIL}Invalid sub-command \`${command}\`. Valid arguments are: ${validCommands}`,
+					PERMISSIONS: `${PREFIXES.FAIL}You need the permission "ADMINISTRATOR" or "MANAGE_GUILD" in order to modify GitHub aliases.`
 				},
 				ALIAS_FORMAT: '`alias:owner/repository`',
 				ADD: {
