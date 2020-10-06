@@ -32,8 +32,8 @@ Both `Class#method` as well as `Class.method` notations are supported. For funct
 
 Display a list of commands or specifics about one command. By default only displays commands you are able to use in this channel, considering user permissions and bot permissions.
 
-Usage1: `!help [--all]`  
-Usage2: `!help <command>`  
+Usage1: `!help [--all]`   
+Usage2: `!help <command>`   
 Flags:
 - `--all` `-a` Display all commands, regardless of restrictions
 
@@ -53,12 +53,27 @@ Displays the websocket heartbeat and API latency.
 
 Usage: `!ping`
 
-### pr-issue
+### prefix
 
-Display information about a certain issue or pull request.
+Display the prefix of this guild or set prefix (requires `MANAGE_GUILD` permission)
 
-Usage: `!pr-issue <repository>#<number> [--verbose]`  
-Usage: `<repository>#<number> [--verbose]` (in a normal message, without prefix or command)
+USAGE: `!prefix [new prefix]` *   
+
+\* prefix has to be 1-5 characters
+
+### github
+
+Display information about a certain issue or pull request or manage repository aliases.
+
+- `github alias <add|remove> <...alias:repo_identifier>` *
+- `github <repository> <owner> <issue>` *
+- `github <alias> <issue>`  *
+- `<owner>/<repo>#<issue>` (non-prefixed) *
+- `<alias>#<issue>` (non-prefixed) *
+
+\* if issue is not a number try to resolve commit-like from it (different display and API call)   
+\* repo identifier: `owner/repository` or a github link (SSH and HTTPS supported)   
+\* non-prefixed usage is only available in special channels (can not be set via command)
 
 Flags:
 - `--verbose` `-v` Display more information
