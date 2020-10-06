@@ -42,6 +42,7 @@ export default class PG {
 				create table if not exists guild_settings(
 					guild	varchar(19) primary key,
 					repository_aliases	text[],
+					prefixless_allowed_channels text[],
 					prefix varchar(5)
 				)
 			`;

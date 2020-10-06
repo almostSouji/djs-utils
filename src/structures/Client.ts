@@ -16,6 +16,7 @@ interface UtilConfig {
 export interface GuildSettings {
 	guild: string;
 	repository_aliases?: string[];
+	prefixless_allowed_channels?: string[];
 	prefix?: string;
 }
 
