@@ -34,6 +34,7 @@ export default class extends Command {
 			.setDescription(stripIndents`
 				• Project: ${name} [v${botVersion}](https://github.com/almostSouji/djs-utils/)
 				• Invite: [${permissions.toArray().join(', ')}](${invite})
+				• Updates: <${process.env.INVITE}>
 			`)
 			.addField('Technical', stripIndents`
 				• Memory usage: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB
