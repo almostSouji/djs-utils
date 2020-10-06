@@ -34,14 +34,12 @@ export default class GitHub extends Command {
 
 		if (!message.guild) return;
 
-		const githubToken = process.env.GITHUB_API_KEY;
+		const githubToken = process.env.GITHUB_TOKEN;
 
 		if (!githubToken) {
 			if (!isPrefixed) return;
 			return;
 		}
-
-		console.log(isPrefixed);
 
 		const first = args.single();
 
@@ -51,8 +49,6 @@ export default class GitHub extends Command {
 
 		const second = args.single();
 		const third = args.single();
-
-		console.log('123:', first, second, third);
 
 		if (!first) {
 			if (!isPrefixed) return;
@@ -110,7 +106,6 @@ export default class GitHub extends Command {
 			where guild = ${guild}
 		`;
 
-		console.log('res', result);
 		const mapping: Map<string, RepositoryEntry> = new Map();
 
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -121,7 +116,6 @@ export default class GitHub extends Command {
 		for (const r of result.repository_aliases) {
 			const [alias, rest] = r.split(':');
 			const [owner, repository] = rest.split('/');
-			console.log('aror', alias, rest, owner, repository);
 			mapping.set(alias, { owner, repository });
 		}
 

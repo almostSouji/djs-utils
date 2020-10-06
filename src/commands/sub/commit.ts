@@ -39,13 +39,12 @@ export async function commit(
 	isPrefixed: boolean,
 	message: Message
 ) {
-	console.log('commit');
 	try {
 		const query = buildQuery(owner, repository, expressions);
 		const res: GitHubAPIResult = await fetch(GITHUB.BASE, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${process.env.GITHUB_API_KEY!}`
+				Authorization: `Bearer ${process.env.GITHUB_TOKEN!}`
 			},
 			body: JSON.stringify({ query })
 		}).then(res => res.json());

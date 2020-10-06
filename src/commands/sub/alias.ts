@@ -9,7 +9,6 @@ const validSubCommands = ['`add`', '`remove`', '`list`'];
 const regExp = /([A-Za-z0-9_.-]+):(?:https:\/\/github\.com\/|git@github\.com:)?([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+?)(?:\.git)?$/;
 
 async function add(message: Message, current: string[], cleaned: string[], sql: Sql<any>) {
-	console.log('alias');
 	if (!cleaned.length) {
 		message.answer(COMMANDS.GITHUB.ALIAS.ADD.NO_ARGS);
 		return;

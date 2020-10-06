@@ -117,13 +117,12 @@ export async function issuePR(
 	isPrefixed: boolean,
 	message: Message
 ) {
-	console.log('issue-pr');
 	try {
 		const query = buildQuery(owner, repository, num);
 		const res: GitHubAPIResult = await fetch(GITHUB.GITHUB_BASE_URL, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${process.env.GITHUB_API_KEY!}`
+				Authorization: `Bearer ${process.env.GITHUB_TOKEN!}`
 			},
 			body: JSON.stringify({ query })
 		}).then(res => res.json());
@@ -267,7 +266,6 @@ export async function issuePR(
 		await message.answer('', embed.shorten());
 	} catch (error) {
 		if (!isPrefixed) return;
-		console.error(error);
 		message.answer(COMMANDS.GITHUB.ERRORS.FETCH);
 	}
 }
