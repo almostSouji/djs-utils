@@ -23,10 +23,10 @@ async function add(message: Message, current: string[], cleaned: string[], sql: 
 	}
 
 	await sql`
-		insert into repository_aliases(guild, aliases)
+		insert into guild_settings(guild, repository_aliases)
 		values(${message.guild!.id}, ${sql.array(updated)})
 		on conflict (guild)
-		do update set aliases = ${sql.array(updated)};`;
+		do update set repository_aliases = ${sql.array(updated)};`;
 
 	const added = cleaned.filter(elem => !current.includes(elem));
 	const content = `${COMMANDS.GITHUB.ALIAS.ADD.TITLE}\n${added
@@ -60,8 +60,8 @@ async function remove(
 	}
 
 	await sql`
-		update repository_aliases
-		set aliases = ${sql.array(updated)}
+		update guild_settings
+		set repository_aliases = ${sql.array(updated)}
 		where guild = ${message.guild!.id};`;
 
 	const removed = current.filter(elem => !updated.includes(elem));
@@ -87,8 +87,8 @@ function list(message: Message, current: string[]) {
 
 async function fetchAliases(guild: string, sql: Sql<any>): Promise<string[]> {
 	const [result] = await sql<{ aliases: string[] }>`
-				select aliases
-				from repository_aliases
+				select repository_aliases
+				from guild_settings
 				where guild = ${guild};`;
 
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

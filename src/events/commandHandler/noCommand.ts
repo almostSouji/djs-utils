@@ -48,7 +48,7 @@ export default class extends Event {
 		}
 
 
-		const match = client.commands.prefixRegExp.exec(message.content)?.[0] ?? null;
+		const match = client.commands.prefixRegExp(message.guild).exec(message.content)?.[0] ?? null;
 		if (match) {
 			const command = this.handler.client.commands.resolve('tag');
 				command?.execute(message, undefined, message.content.replace(match, ''), ExecutionContext['TAG_MATCH']);

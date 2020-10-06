@@ -39,17 +39,18 @@ export default class PG {
 			`;
 
 			await sql`
-				create table if not exists repository_aliases(
+				create table if not exists guild_settings(
 					guild	varchar(19) primary key,
-					aliases	text[]
+					repository_aliases	text[],
+					prefix varchar(5)
 				)
 			`;
 		});
 
-		const settingsRes = await this.sql`
+		const tagRes = await this.sql`
 			select * from tags
 		`;
-		for (const row of settingsRes) {
+		for (const row of tagRes) {
 			const tag = {
 				...row,
 				aliases: row.aliases.split(',')

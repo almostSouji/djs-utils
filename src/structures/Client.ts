@@ -13,6 +13,12 @@ interface UtilConfig {
 	owner: string[];
 }
 
+export interface GuildSettings {
+	guild: string;
+	repository_aliases?: string[];
+	prefix?: string;
+}
+
 declare module 'discord.js' {
 	export interface Client {
 		readonly commands: CommandHandler;
@@ -20,6 +26,7 @@ declare module 'discord.js' {
 		readonly logger: Logger;
 		readonly sql: Sql<{}>;
 		readonly tagCache: Collection<string, Tag>;
+		readonly guildSettings: Collection<string, GuildSettings>;
 		resolveRole(guild: Guild, query?: string): Role | undefined;
 		resolveChannel(guild: Guild, types: GuildChannelType[], query?: string): GuildChannel | undefined;
 	}
@@ -35,6 +42,7 @@ export class UtilsClient extends Client {
 	public readonly sql: Sql<{}>;
 	private readonly db: Database;
 	public readonly tagCache = new Collection<string, Tag>();
+	public readonly guildSettings= new Collection<string, GuildSettings>();
 	public constructor(config: UtilConfig, clientOptions: ClientOptions = {}) {
 		super(clientOptions);
 		this.config = config;
@@ -104,8 +112,18 @@ export class UtilsClient extends Client {
 		}
 	}
 
+	public async initSettings() {
+		const res = await this.sql<GuildSettings>`
+			select * from guild_settings
+		`;
+		for (const row of res) {
+			this.guildSettings.set(row.guild, row);
+		}
+	}
+
 	public async init(token: string) {
 		await this.db.init();
+		await this.initSettings();
 		await this.login(token);
 	}
 }

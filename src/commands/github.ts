@@ -68,10 +68,6 @@ export default class GitHub extends Command {
 		const repository = third ? second : aliasEntry?.repository;
 		const issueOrExpression = third ? third : second;
 
-		console.log('alias', aliasEntry);
-		console.log('aliases', repositoryAliases);
-		console.log('ori', owner, repository, issueOrExpression);
-
 		if (!owner || !repository || !issueOrExpression) {
 			if (!isPrefixed) return;
 
@@ -108,9 +104,9 @@ export default class GitHub extends Command {
 	}
 
 	private async fetchAliases(guild: string): Promise<Map<string, RepositoryEntry>> {
-		const [result] = await this.handler.client.sql<{ aliases: string[] }>`
-			select aliases
-			from repository_aliases
+		const [result] = await this.handler.client.sql<{ repository_aliases: string[] }>`
+			select repository_aliases
+			from guild_settings
 			where guild = ${guild}
 		`;
 
@@ -118,11 +114,11 @@ export default class GitHub extends Command {
 		const mapping: Map<string, RepositoryEntry> = new Map();
 
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (!result?.aliases?.length) {
+		if (!result?.repository_aliases?.length) {
 			return mapping;
 		}
 
-		for (const r of result.aliases) {
+		for (const r of result.repository_aliases) {
 			const [alias, rest] = r.split(':');
 			const [owner, repository] = rest.split('/');
 			console.log('aror', alias, rest, owner, repository);

@@ -187,6 +187,14 @@ export const MESSAGES = {
 			WAITING: 'waiting for API response...',
 			SUCCESS: (heartbeat: number, latency: number) => `${PREFIXES.SUCCESS}pong! Api latency is ${latency}ms. Average websocket heartbeat: ${heartbeat}ms.`
 		},
+		PREFIX: {
+			NO_GUILD: (defaultPrefix: string) => `${PREFIXES.FAIL}To set a prefix please use the command in a guild, my default prefix is \`${defaultPrefix}\`.`,
+			CURRENT: (prefix: string) => `The current prefix on this guild is set to \`${prefix}\``,
+			ERRORS: {
+				TOO_LONG: `${PREFIXES.FAIL}The prefix you picked is too long. Make sure you provide a prefix of length 5 or lower!`
+			},
+			SUCCESS: (guild: string, prefix: string) => `${PREFIXES.SUCCESS}Prefix on ${guild} set to \`${prefix}\`.`
+		},
 		LOAD: {
 			FAIL: `${PREFIXES.FAIL}Something went wrong, check console.`,
 			NO_TAGS: 'No tags inserted.',
@@ -198,7 +206,7 @@ export const MESSAGES = {
 		},
 		RELOAD: {
 			FAIL: `${PREFIXES.FAIL}Something went wrong, check console.`,
-			SUCCESS: `${PREFIXES.SUCCESS} Reloaded tags.`
+			SUCCESS: `${PREFIXES.SUCCESS}Reloaded tags.`
 		},
 		TAG: {
 			NO_QUERY: `${PREFIXES.FAIL}No query provided`,

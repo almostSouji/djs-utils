@@ -3,7 +3,7 @@ import { join } from 'path';
 import { readdirSync } from 'fs';
 import * as Lexure from 'lexure';
 import { UtilsClient } from '../structures/Client';
-import { Message, User, TextChannel, Permissions, Collection } from 'discord.js';
+import { Message, User, TextChannel, Permissions, Collection, Guild } from 'discord.js';
 import * as chalk from 'chalk';
 import { EventEmitter } from 'events';
 
@@ -53,7 +53,7 @@ export default class CommandHandler extends EventEmitter {
 				['“', '”']
 			]);
 
-		const r = lexer.lexCommand(s => this.prefixRegExp.exec(s)?.[0]?.length ?? null);
+		const r = lexer.lexCommand(s => this.prefixRegExp(message.guild).exec(s)?.[0]?.length ?? null);
 		const command = r ? this.resolve(r[0].value) : undefined;
 
 		if (!command) {
@@ -98,11 +98,14 @@ export default class CommandHandler extends EventEmitter {
 		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 	}
 
-	public get prefix(): string {
-		return this.client.config.prefix;
+	public prefix(guild?: Guild | null): string {
+		const defaultPrefix = this.client.config.prefix;
+		if (!guild) return defaultPrefix;
+		return this.client.guildSettings.get(guild.id)?.prefix || defaultPrefix;
 	}
 
-	public get prefixRegExp(): RegExp {
-		return new RegExp(`^(<@!?${this.client.user!.id}>|${this.escapeRegex(this.prefix)})\\s*`);
+	public prefixRegExp(guild?: Guild | null): RegExp {
+		const prefix = this.prefix(guild);
+		return new RegExp(`^(<@!?${this.client.user!.id}>|${this.escapeRegex(prefix)})\\s*`);
 	}
 }
