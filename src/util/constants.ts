@@ -111,7 +111,7 @@ export const MESSAGES = {
 				ADD: {
 					NO_ARGS: 'Please provide valid repository aliases to add. Valid format: `alias:owner/repository`. Also make sure the desired alias does not already exist.',
 					NO_ADD: 'No new repository aliases were added.',
-					TITLE: 'The following repository aliases have been enabled on this  server:'
+					TITLE: 'The following repository aliases have been enabled on this server:'
 				},
 				REMOVE: {
 					NO_ARGS: 'Please provide valid repository aliases to remove. Valid format: `alias:owner/repository`.',
