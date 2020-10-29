@@ -27,13 +27,13 @@ export default class extends Command {
 			return a.concat(p);
 		}, []).filter(e => e))];
 		const permissions = new Permissions(maxPermissions);
-		const invite = await client.generateInvite(permissions);
+		const invite = await client.generateInvite({ permissions });
 
 		const embed = new Embed()
 			.setTitle('Stats')
 			.setDescription(stripIndents`
 				• Project: ${name} [v${botVersion}](https://github.com/almostSouji/djs-utils/)
-				• Invite: [(click) required permissions:\n${permissions.toArray().join(', ')}](${invite})
+				• Invite: [(click)](${invite})
 			`)
 			.addField('Technical', stripIndents`
 				• Memory usage: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB
@@ -47,7 +47,7 @@ export default class extends Command {
 				• Tags: ${client.tagCache.size}
 			`, true)
 			.setThumbnail(client.user?.displayAvatarURL()!)
-			.setFooter(`Coded with 🍵 by ${owner.tag} | © 2020`, owner.displayAvatarURL({ dynamic: true }));
+			.setFooter(`Coded with 🍵 by ${owner.tag}`, owner.displayAvatarURL({ dynamic: true }));
 
 		message.answer('', embed);
 	}
