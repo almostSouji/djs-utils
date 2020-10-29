@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 LABEL name "djs-utils"
 LABEL version "0.1.2"
 LABEL maintainer "almostSouji <https://github.com/almostSouji>"
