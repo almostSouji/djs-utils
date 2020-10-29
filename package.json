@@ -20,7 +20,7 @@
 		"chalk": "^4.1.0",
 		"common-tags": "^1.8.0",
 		"date-fns": "^2.15.0",
-		"discord.js": "^12.3.1",
+		"discord.js": "^12.4.1",
 		"dotenv": "^6.0.0",
 		"fetch": "^1.1.0",
 		"js-yaml": "^3.14.0",
