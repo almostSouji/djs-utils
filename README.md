@@ -68,12 +68,12 @@ Display information about a certain issue or pull request or manage repository a
 - `github alias <add|remove> <...alias:repo_identifier>` *
 - `github <repository> <owner> <issue>` *
 - `github <alias> <issue>`  *
-- `<owner>/<repo>#<issue>` (non-prefixed) *
-- `<alias>#<issue>` (non-prefixed) *
+- [ALPHA] `<owner>/<repo>#<issue>` (non-prefixed) *
+- [ALPHA] `<alias>#<issue>` (non-prefixed) *
 
 \* if issue is not a number try to resolve commit-like from it (different display and API call)   
 \* repo identifier: `owner/repository` or a github link (SSH and HTTPS supported)   
-\* non-prefixed usage is only available in special channels (can not be set via command)
+\* [ALPHA] non-prefixed usage is only available in special channels (can not be set via command)
 
 Flags:
 - `--verbose` `-v` Display more information
