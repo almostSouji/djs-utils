@@ -8,7 +8,7 @@ import { ellipsis } from '../util';
 
 const { COMMANDS } = MESSAGES;
 
-export default class extends Command {
+export default class TagCommand extends Command {
 	private readonly subCommands = ['search', 'show'];
 	public constructor(handler: CommandHandler) {
 		super('tag', handler, {
@@ -21,22 +21,33 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, args: Lexure.Args, special?: string): Promise<Message|void> {
+	public async executeFromRegExp(message: Message, str: string): Promise<Message|void> {
 		const { client } = this.handler;
-		const subCommand = args ? args.single() : special!;
-		const query = args ? Lexure.joinTokens(args.many()) : special!;
-		if (subCommand === 'show' || special) {
+		const tag = client.tagCache.find(tag => (str === tag.name || tag.aliases.includes(str)));
+		if (tag) {
+			if (message.useEmbed) {
+				const embed = new Embed()
+					.setFooter(COMMANDS.TAG.NOTICE, client.user!.displayAvatarURL({ dynamic: true }))
+					.setDescription(tag.content)
+					.shorten();
+				return message.answer('', embed);
+			}
+			return message.answer(tag.content);
+		}
+	}
+
+	public async execute(message: Message, args: Lexure.Args): Promise<Message|void> {
+		const { client } = this.handler;
+		const subCommand = args.single();
+		const query = Lexure.joinTokens(args.many());
+		if (subCommand === 'show') {
 			if (!query.length) {
-				if (!special) {
-					message.answer(COMMANDS.TAG.NO_QUERY);
-				}
+				message.answer(COMMANDS.TAG.NO_QUERY);
 				return;
 			}
 			const tag = client.tagCache.find(tag => (query === tag.name || tag.aliases.includes(query)));
 			if (!tag) {
-				if (!special) {
-					message.answer(COMMANDS.TAG.NO_TAG(query));
-				}
+				message.answer(COMMANDS.TAG.NO_TAG(query));
 				return;
 			}
 			if (message.useEmbed) {
@@ -47,7 +58,7 @@ export default class extends Command {
 				return message.answer('', embed);
 			}
 			return message.answer(tag.content);
-		} else if (subCommand === 'search' && !special) {
+		} else if (subCommand === 'search') {
 			if (!query.length) {
 				return message.answer(COMMANDS.TAG.NO_QUERY);
 			}
@@ -67,8 +78,7 @@ export default class extends Command {
 				return message.answer('', embed);
 			}
 			return message.answer(ellipsis(`Found tags: ${searchResult}`, 1900));
-		} else if (!special) {
-			return message.answer(COMMANDS.COMMON.FAIL.NO_SUB_COMMAND(this.subCommands));
 		}
+		return message.answer(COMMANDS.COMMON.FAIL.NO_SUB_COMMAND(this.subCommands));
 	}
 }

@@ -4,6 +4,7 @@ import { Message, TextChannel, Guild } from 'discord.js';
 import { Args, Token, ParserOutput } from 'lexure';
 import { ExecutionContext } from '../../structures/Command';
 import { PREFIXES } from '../../util/constants';
+import TagCommand from '../../commands/tag';
 
 export default class extends Event {
 	public constructor(handler: EventHandler) {
@@ -56,9 +57,12 @@ export default class extends Event {
 
 		const match = client.commands.prefixRegExp(message.guild).exec(message.content)?.[0] ?? null;
 		if (match) {
-			const command = this.handler.client.commands.resolve('tag');
-				command?.execute(message, undefined, message.content.replace(match, ''), ExecutionContext['TAG_MATCH']);
-				return true;
+			const command = this.handler.client.commands.resolve('tag') as TagCommand;
+			const str = message.content.replace(match, '');
+			if (!str) return false;
+			command.executeFromRegExp(message, str);
+
+			return true;
 		}
 		return false;
 	}
