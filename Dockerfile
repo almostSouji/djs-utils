@@ -1,17 +1,8 @@
-FROM node:14-alpine
+FROM node:15-alpine
 LABEL name "djs-utils"
-LABEL version "0.1.2"
+LABEL version "0.2.0"
 LABEL maintainer "almostSouji <https://github.com/almostSouji>"
-ENV TOKEN=\
-	OWNER=\
-	PREFIX=\
-	GITHUB_API_KEY=\
-	PGHOST=\
-	PGPORT=\
-	PGDATABASE=\
-	PGUSER=\
-	PGPASSWORD=\
-	FORCE_COLOR=1
+ENV FORCE_COLOR=1
 WORKDIR /usr/djs-utils
 COPY package.json ./
 RUN apk add --update \
