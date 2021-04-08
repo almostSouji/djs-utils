@@ -15,5 +15,5 @@ export abstract class Event {
 		this.handler = handler;
 	}
 
-	public abstract async execute(...data: unknown[]): Promise<boolean>;
+	public abstract execute(...data: unknown[]): Promise<boolean>;
 }
