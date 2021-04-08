@@ -1,10 +1,14 @@
 # About
 
-Utility bot for discord to aid support and development with [discord.js](https://github.com/discordjs/discord.js). Tags are deliberately only occasionally mirrored from the discord.js server, features to modify tags are not planned.
+Utility bot for discord, to aid support and development with [discord.js](https://github.com/discordjs/discord.js). Tags are deliberately only occasionally mirrored from the discord.js server. A feature to modify tags is not planned.
+
+## Slash commands
+
+The bot scope should be considered deprecated. This project will move forward to focus on slash command integration instead. Add the discord.js interaction to your server: [(click here)](https://discord.com/api/oauth2/authorize?client_id=348607796335607817&scope=applications.commands)
 
 ## Commands
 
-The list below uses `!` as placeholder prefix. This prefix may vary based on bot instance and server.
+The list below uses the default prefix `djs `. This prefix may vary based on bot instance and server.
 
 <details>
 <summary><b>click to toggle list</b></summary>
@@ -14,34 +18,34 @@ The list below uses `!` as placeholder prefix. This prefix may vary based on bot
 
 Display information about the bot.
 
-Usage: `!about`
+Usage: `djs about`
 
 ### docs
 
 Query discord.js documentation.
 
-Usage: `!docs <query> [--source=<source>] [--force]`   
+Usage: `djs docs <query> [--source=<source>] [--force]`   
 Source: 'stable', 'master', 'rpc', 'commando', 'collection'   
 Flags:
 - `--force` `-f` Refresh documentation cache
 - `--source=<source>`, `-src=<source>` Provide a source other than the discord.js main repository
 
-Both `Class#method` as well as `Class.method` notations are supported. For functions omit the call signature `()`. The query is case-insensitive.
+Both `Class#method` as well as `Class.method` notations are supported. For functions, omit the call signature `()`. The query is case-insensitive.
 
 ### help
 
 Display a list of commands or specifics about one command. By default only displays commands you are able to use in this channel, considering user permissions and bot permissions.
 
-Usage1: `!help [--all]`   
-Usage2: `!help <command>`   
+Usage1: `djs help [--all]`   
+Usage2: `djs help <command>`   
 Flags:
 - `--all` `-a` Display all commands, regardless of restrictions
 
 ### load
 
-Owner only, load tags from specified .yaml format as applied by the main bot of discord.js official. This command needs to be used with a file upload.
+Owner only. Load tags from specified .yaml format as applied by the main bot of discord.js official. This command needs to be used with a file upload.
 
-Usage: `!load [--reset]`
+Usage: `djs load [--reset]`
 
 Flags:
 - `--reset` `-r` Reset the tag database before loading
@@ -51,48 +55,29 @@ Flags:
 
 Displays the websocket heartbeat and API latency.
 
-Usage: `!ping`
+Usage: `djs ping`
 
 ### prefix
 
 Display the prefix of this guild or set prefix (requires `MANAGE_GUILD` permission)
 
-USAGE: `!prefix [new prefix]` *   
+USAGE: `djs prefix [new prefix]` *   
 
 \* prefix has to be 1-5 characters
 
-### github
-
-Display information about a certain issue or pull request or manage repository aliases.
-
-- `github alias <add|remove> <...alias:repo_identifier>` *
-- `github <repository> <owner> <issue>` *
-- `github <alias> <issue>`  *
-- [ALPHA] `<owner>/<repo>#<issue>` (non-prefixed) *
-- [ALPHA] `<alias>#<issue>` (non-prefixed) *
-
-\* if issue is not a number try to resolve commit-like from it (different display and API call)   
-\* repo identifier: `owner/repository` or a github link (SSH and HTTPS supported)   
-\* [ALPHA] non-prefixed usage is only available in special channels (can not be set via command)
-
-Flags:
-- `--verbose` `-v` Display more information
-
-For now this command requires the bot to be able to use embeds.
-
 ### reload
 
-Owner only, reload the tag cache from the database.
+Owner only. Reload the tag cache from the database.
 
-Usage: `!reload`
+Usage: `djs reload`
 
 ### tag
 
 Shows or searches a tag mirrored from discord.js official (This bot does not allow adding new or modifying tags)
 
-Usage1: `!tag search <query>`   
-Usage2: `!tag show <tagname>`   
-Usage: `!<tagname>` (in a normal message, with prefix, without command has to be the only content)
+Usage1: `djs tag search <query>`   
+Usage2: `djs tag show <tagname>`   
+Usage: `djs <tagname>` (in a normal message, with prefix, without command has to be the only content)
 
 </details>
 
