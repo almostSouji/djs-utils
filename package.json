@@ -10,6 +10,7 @@
 	"license": "UNLICENSED",
 	"scripts": {
 		"start": "node -r dotenv/config dist/index.js",
+		"init": "node -r dotenv/config dist/src/init.js",
 		"build": "tsc",
 		"lint": "eslint src --ext ts",
 		"lint:fix": "eslint src --ext ts --fix"
@@ -17,29 +18,41 @@
 	"author": "Souji",
 	"dependencies": {
 		"@naval-base/ms": "^3.1.0",
+		"algoliasearch": "^4.8.3",
 		"chalk": "^4.1.0",
+		"cheerio": "^1.0.0-rc.5",
 		"common-tags": "^1.8.0",
 		"date-fns": "^2.15.0",
+		"discord-interactions": "^1.4.1",
 		"discord.js": "^12.4.1",
+		"discord.js-docs": "^0.1.2",
 		"dotenv": "^6.0.0",
+		"express": "^4.17.1",
+		"fastest-levenshtein": "^1.0.12",
 		"fetch": "^1.1.0",
+		"html-entities": "^1.4.0",
 		"js-yaml": "^3.14.0",
 		"lexure": "^0.14.1",
 		"postgres": "github:porsager/postgres#v2.0.0-beta.0",
+		"turndown": "^7.0.0",
 		"winston": "^3.3.3"
 	},
 	"devDependencies": {
+		"@types/cheerio": "^0.22.25",
 		"@types/common-tags": "^1.8.0",
 		"@types/dotenv": "^6.1.1",
+		"@types/express": "^4.17.9",
+		"@types/html-entities": "^1.2.16",
 		"@types/js-yaml": "^3.12.5",
 		"@types/node": "^14.0.19",
 		"@types/node-fetch": "^2.5.7",
+		"@types/turndown": "^5.0.0",
 		"@types/ws": "^7.2.6",
 		"@typescript-eslint/eslint-plugin": "^2.20.0",
 		"@typescript-eslint/parser": "^2.20.0",
 		"eslint": "^6.8.0",
 		"eslint-config-marine": "^6.0.0",
-		"typescript": "^3.8.3"
+		"typescript": "^4.2.3"
 	},
 	"eslintConfig": {
 		"extends": "marine/node"

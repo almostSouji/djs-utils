@@ -20,3 +20,5 @@ services:
     links:
       - 'database'
       - 'database:db'
+    ports:
+      - '49666:49666'

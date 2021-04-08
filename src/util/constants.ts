@@ -8,6 +8,8 @@ export const EMBED_LIMITS = {
 	FIELD_VALUE: 1024
 };
 
+export const FAIL_PREFIX = '\`❌ Error\`';
+
 export const MESSAGE_CONTENT_LIMIT = 2000;
 export const CONFIRMATION_TIMEOUT = 30000;
 
@@ -31,8 +33,8 @@ export const COLORS = {
 };
 
 export const PREFIXES = {
-	FAIL: '',
-	ERROR: '',
+	FAIL: '`❌` ',
+	ERROR: '`❌ ERROR` ',
 	SUCCESS: '',
 	COMMAND_USAGE: {
 		BLOCKED: '❌',

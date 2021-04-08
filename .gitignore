@@ -9,3 +9,6 @@ node_modules
 # debug cmds
 eval.ts
 test_*.ts
+
+# data
+data
