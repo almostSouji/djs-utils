@@ -9,7 +9,7 @@ const API_BASE = 'https://nodejs.org';
 const NODE_ICON = '<:node_js:818292297644245103>';
 const td = new TurndownService({ codeBlockStyle: 'fenced' });
 
-type QueryType = 'method' | 'class' | 'event';
+type QueryType = 'method' | 'class' | 'event' | 'classMethod';
 
 function findRec(o: any, name: string, type: QueryType): any {
 	name = name.toLowerCase();
@@ -45,11 +45,15 @@ export async function nodeSearch(res: Response, query: string, target?: string):
 		const queryParts = query.split(/#|\.|\s/);
 		const altQuery = queryParts[queryParts.length - 1];
 
-		const result = findRec(page.data, query, 'method') ??
-			 findRec(page.data, query, 'class') ??
-			 findRec(page.data, query, 'event') ??
-			 findRec(page.data, altQuery, 'method') ??
-			 findRec(page.data, altQuery, 'event');
+		const result =
+			findRec(page.data, query, 'class') ??
+			findRec(page.data, query, 'classMethod') ??
+			findRec(page.data, query, 'method') ??
+			findRec(page.data, query, 'event') ??
+			findRec(page.data, altQuery, 'class') ??
+			findRec(page.data, altQuery, 'method') ??
+			findRec(page.data, altQuery, 'event') ??
+			findRec(page.data, altQuery, 'classMethod');
 
 		if (!result) {
 			if (page.searchURL.includes(query)) {
