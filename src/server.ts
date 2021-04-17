@@ -51,7 +51,7 @@ export async function start(vars: Runvariables) {
 					}
 
 					if (name === 'guide') {
-						return (await djsGuide(res, args.query, args.target)).end();
+						return (await djsGuide(res, args.query, args.results, args.target)).end();
 					}
 
 					if (name === 'mdn') {
