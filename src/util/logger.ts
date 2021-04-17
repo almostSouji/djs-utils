@@ -32,9 +32,7 @@ export const logger = createLogger({
 		format.timestamp({ format: 'MM/DD/YYYY HH:mm:ss' }),
 		format.printf((data: any) => {
 			const { timestamp, level, message, ...rest } = data;
-			return `[${timestamp}][${level}]: ${message}${
-				rest instanceof Error ? rest : Object.keys(rest).length ? `\n${JSON.stringify(rest, null, 2)}` : ''
-			}`;
+			return `[${timestamp}][${level}]: ${message}${rest instanceof Error ? rest : Object.keys(rest).length ? `\n${JSON.stringify(rest, null, 2)}` : ''}`;
 		})
 	),
 	transports: new transports.Console(),

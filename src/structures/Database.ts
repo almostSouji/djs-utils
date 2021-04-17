@@ -1,4 +1,4 @@
-import * as postgres from 'postgres';
+import postgres from 'postgres';
 import { UtilsClient } from './Client';
 
 export interface Tag {

@@ -2,9 +2,9 @@ const ALGOLIA_APP = process.env.ALGOLIA_APP;
 const ALGOLIA_KEY = process.env.ALGOLIA_KEY;
 
 import * as qs from 'querystring';
-import { FAIL_PREFIX } from '../util/constants';
-import { Response } from 'express';
+import { Response } from 'polka';
 import fetch from 'node-fetch';
+import { prepareErrorResponse, prepareResponse } from '../util/respond';
 
 const base = `${ALGOLIA_APP}.algolia.net`;
 const GUIDE_ICON = `<:djsguide:814216203466965052>`;
@@ -25,27 +25,14 @@ export async function djsGuide(response: Response, search: string, target?: stri
 	}).then(res => res.json());
 
 	if (!res.hits.length) {
-		return response.send({
-			data: {
-				content: `${FAIL_PREFIX} Nothing found.`,
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				allowed_mentions: { parse: [] },
-				flags: 64
-			},
-			type: 4
-		});
+		prepareErrorResponse(response, 'Nothing found.');
+		return response;
 	}
 	const relevant = res.hits.slice(0, 4);
 	const result = relevant.map(({ hierarchy, url }) => `• ${hierarchy.lvl0 ?? hierarchy.lvl1 ?? ''}: [${hierarchy.lvl2 ?? hierarchy.lvl1 ?? 'click here'}](<${url}>)${hierarchy.lvl3 ? ` - ${hierarchy.lvl3}` : ''}`);
 
-	return response.send({
-		data: {
-			content: `${target ? `*Guide suggestion for <@${target}>:*\n` : ''}${GUIDE_ICON} **discordjs.guide results:**\n${result.join('\n')}`,
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			allowed_mentions: { parse: [], users: [target] }
-		},
-		type: 4
-	});
+	prepareResponse(response, `${target ? `*Guide suggestion for <@${target}>:*\n` : ''}${GUIDE_ICON} **discordjs.guide results:**\n${result.join('\n')}`, false, target ? [target] : []);
+	return response;
 }
 
 interface AlgoliaSearchResult {

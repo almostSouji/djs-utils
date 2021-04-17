@@ -1,7 +1,7 @@
 import { UtilsClient } from '../structures/Client';
 import { readdirSync } from 'fs';
 import { join } from 'path';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { EventEmitter } from 'events';
 import { Event } from '../structures/Event';
 import { Collection } from 'discord.js';
@@ -33,7 +33,7 @@ export default class EventHandler {
 
 			this.events.set(event.name, event.execute.bind(event));
 			emitter.on(event.name, event.execute.bind(event));
-			this.client.logger.info(`event: ${event.name} ${chalk.green('▶️')} ${emitter.constructor.name}`);
+			this.client.logger.info(`event: ${event.name} ${chalk.green('❯')} ${emitter.constructor.name}`);
 		}
 		return this.events.size;
 	}

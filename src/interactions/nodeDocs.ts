@@ -1,9 +1,9 @@
-import { Response } from 'express';
+import { Response } from 'polka';
 import { logger } from '../util/logger';
 import { duckSearch, DuckSearchSite } from '../util/duckSearch';
-import * as TurndownService from 'turndown';
+import TurndownService from 'turndown';
 import * as cheerio from 'cheerio';
-import { ephemeralError } from '../util/ephemAnswer';
+import { prepareErrorResponse, prepareResponse } from '../util/respond';
 
 const API_BASE = 'https://nodejs.org';
 const NODE_ICON = '<:node_js:818292297644245103>';
@@ -28,18 +28,13 @@ export async function nodeSearch(res: Response, query: string, target?: string):
 	try {
 		const page = await duckSearch(query, DuckSearchSite.node);
 		if (!page) {
-			return ephemeralError(res, 'No search result found. Maybe try later or try a different query!');
+			prepareErrorResponse(res, 'No search result found. Maybe try later or try a different query!');
+			return res;
 		}
 
 		if (!page.data) {
-			return res.send({
-				type: 4,
-				data: {
-					content: `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}Unable to parse received data, but maybe this is useful: <${page.searchURL}>`,
-					// eslint-disable-next-line @typescript-eslint/naming-convention
-					allowed_mentions: { parse: [], users: [target] }
-				}
-			});
+			prepareResponse(res, `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}Unable to parse received data, but maybe this is useful: <${page.searchURL}>`, false, target ? [target] : []);
+			return res;
 		}
 
 		const queryParts = query.split(/#|\.|\s/);
@@ -57,16 +52,11 @@ export async function nodeSearch(res: Response, query: string, target?: string):
 
 		if (!result) {
 			if (page.searchURL.includes(query)) {
-				return res.send({
-					type: 4,
-					data: {
-						content: `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}Unable to parse received data, but maybe this is useful: <${page.searchURL}>`,
-						// eslint-disable-next-line @typescript-eslint/naming-convention
-						allowed_mentions: { parse: [], users: [target] }
-					}
-				});
+				prepareResponse(res, `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}Unable to parse received data, but maybe this is useful: <${page.searchURL}>`, false, target ? [target] : []);
+				return res;
 			}
-			return ephemeralError(res, 'No result found in input data.');
+			prepareErrorResponse(res, 'No result found in input data.');
+			return res;
 		}
 
 		const heading = result.type === 'method' ? result.textRaw.replaceAll('`', '') : result.name;
@@ -83,16 +73,11 @@ export async function nodeSearch(res: Response, query: string, target?: string):
 
 		parts.push(intro.replace(linkReplaceRegex, `[$1](<${API_BASE}/$2>)`).replace(boldCodeBlockRegex, '**`$1`**'));
 
-		return res.send({
-			type: 4,
-			data: {
-				content: `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}${parts.join('\n')}`,
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				allowed_mentions: { parse: [], users: [target] }
-			}
-		});
+		prepareResponse(res, `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}${parts.join('\n')}`, false, target ? [target] : []);
+		return res;
 	} catch (error) {
 		logger.error(error);
-		return ephemeralError(res, 'Something went wrong');
+		prepareErrorResponse(res, 'Something went wrong.');
+		return res;
 	}
 }

@@ -4,8 +4,8 @@ import { readdirSync } from 'fs';
 import * as Lexure from 'lexure';
 import { UtilsClient } from '../structures/Client';
 import { Message, User, TextChannel, Permissions, Collection, Guild } from 'discord.js';
-import * as chalk from 'chalk';
 import { EventEmitter } from 'events';
+import chalk from 'chalk';
 
 export default class CommandHandler extends EventEmitter {
 	public readonly commands = new Collection<string, Command>();
@@ -45,7 +45,7 @@ export default class CommandHandler extends EventEmitter {
 		return this.client.config.owner.includes(user.id);
 	}
 
-	public async handle(message: Message): Promise<Message|void> {
+	public async handle(message: Message): Promise<Message | void> {
 		const { content, guild, author: { tag }, channel } = message;
 		const lexer = new Lexure.Lexer(content)
 			.setQuotes([

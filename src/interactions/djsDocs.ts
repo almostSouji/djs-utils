@@ -1,6 +1,6 @@
-import { Response } from 'express';
-import * as Doc from 'discord.js-docs';
-import { PREFIXES } from '../util/constants';
+import { Response } from 'polka';
+import Doc from 'discord.js-docs';
+import { prepareResponse, prepareErrorResponse } from '../util/respond';
 
 const DJS_ICON = '<:djs:586438523796848640>';
 const DJS_ICON_MASTER = '<:djsmaster:818953388305809430>';
@@ -41,36 +41,16 @@ export async function djsDocs(res: Response, source: string, query: string, targ
 	const icon = source === 'master' ? DJS_ICON_MASTER : DJS_ICON;
 
 	if (element) {
-		return res.send({
-			data: {
-				content: `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}${icon} ${resolveElementString(element, doc)}`,
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				allowed_mentions: { parse: [], users: [target] }
-			},
-			type: 4
-		});
+		prepareResponse(res, `${target ? `*Documentation suggestion for <@${target}>:*\n` : ''}${icon} ${resolveElementString(element, doc)}`, false, target ? [target] : []);
+		return res;
 	}
 
 	const results = doc.search(query);
 	if (results?.length) {
-		return res.send({
-			data: {
-				content: resolveResultString(results),
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				allowed_mentions: { parse: [] },
-				flags: 64
-			},
-			type: 4
-		});
+		prepareResponse(res, resolveResultString(results), true);
+		return res;
 	}
 
-	return res.send({
-		data: {
-			content: `${PREFIXES.FAIL} Nothing found with provided parameters.`,
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			allowed_mentions: { parse: [] },
-			flags: 64
-		},
-		type: 4
-	});
+	prepareErrorResponse(res, 'Nothing found with provided parameters.');
+	return res;
 }
