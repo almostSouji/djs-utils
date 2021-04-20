@@ -24,7 +24,7 @@ function resolveElementString(element: DocElement, doc: Doc): string {
 	if (element?.access === 'private') parts.push(' **PRIVATE**');
 	if (element?.deprecated) parts.push(' **DEPRECATED**');
 
-	const s = (element?.formattedDescription ?? element?.description ?? '').split('\n');
+	const s = (escapeMDLinks(element.formattedDescription)).split('\n');
 	const description = s.length > 1 ? `${s[0]} [(more...)](<${element?.url ?? ''}>)` : s[0];
 
 	return `${parts.join('')}\n${description}`;
