@@ -37,11 +37,11 @@ export async function start(vars: Runvariables) {
 		.use(jsonParser(), verify)
 		.post('/interactions', async (req, res) => {
 			const message = req.body;
-			logger.log('cleanup', `${chalk.blue(inspect(message, { depth: null }))}`);
+			logger.log('explore', `${chalk.blue(inspect(message, { depth: null }))}`);
 			if (message.type === 2) {
 				const { data: { name, id, options }, member } = message;
 
-				logger.log('explore', `${name} (${id}) by ${`${member.user.username}#${member.user.discriminator}`}`);
+				logger.log('explore', `${name} (${id}) by ${chalk.blue(`${member.user.username}#${member.user.discriminator}`)}`);
 
 				if (options?.length) {
 					const args = Object.fromEntries(options.map(({ name, value }: { name: string; value: any }) => [name, value]));
@@ -74,5 +74,5 @@ export async function start(vars: Runvariables) {
 			}
 		})
 		.listen(vars.port);
-	logger.log('ok', `Listening for interactions on port ${vars.port}`);
+	logger.log('ok', `Listening for interactions on port ${chalk.green(vars.port)}`);
 }

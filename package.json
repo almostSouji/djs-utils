@@ -37,7 +37,6 @@
 		"winston": "^3.3.3"
 	},
 	"devDependencies": {
-		"@types/chalk": "^2.2.0",
 		"@types/cheerio": "^0.22.25",
 		"@types/common-tags": "^1.8.0",
 		"@types/dotenv": "^6.1.1",

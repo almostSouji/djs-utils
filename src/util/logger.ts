@@ -7,8 +7,7 @@ const loggerLevels = {
 		warn: 2,
 		info: 3,
 		ok: 4,
-		explore: 5,
-		cleanup: 6
+		explore: 5
 	},
 	colors: {
 		error: 'red',
@@ -16,8 +15,7 @@ const loggerLevels = {
 		warn: 'yellow',
 		info: 'green',
 		ok: 'green',
-		explore: 'blue',
-		cleanup: 'white'
+		explore: 'blue'
 	}
 };
 
