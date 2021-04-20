@@ -25,7 +25,7 @@
 		"common-tags": "^1.8.0",
 		"date-fns": "^2.15.0",
 		"discord-interactions": "^1.4.1",
-		"discord.js": "^12.4.1",
+		"discord.js": "^12.5.3",
 		"discord.js-docs": "^0.1.2",
 		"dotenv": "^6.0.0",
 		"express": "^4.17.1",
