@@ -43,7 +43,7 @@ export class UtilsClient extends Client {
 	public readonly sql: Sql<{}>;
 	private readonly db: Database;
 	public readonly tagCache = new Collection<string, Tag>();
-	public readonly guildSettings= new Collection<string, GuildSettings>();
+	public readonly guildSettings = new Collection<string, GuildSettings>();
 	public constructor(config: UtilConfig, clientOptions: ClientOptions = {}) {
 		super(clientOptions);
 		this.config = config;
@@ -114,7 +114,7 @@ export class UtilsClient extends Client {
 	}
 
 	public async initSettings() {
-		const res = await this.sql<GuildSettings>`
+		const res = await this.sql<GuildSettings[]>`
 			select * from guild_settings
 		`;
 		for (const row of res) {
