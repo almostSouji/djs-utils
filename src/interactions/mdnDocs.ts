@@ -20,7 +20,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 		}
 
 		if (!hit) {
-			prepareErrorResponse(res, `No search result found for qurey \`${query}\``);
+			prepareErrorResponse(res, `No search result found for query \`${query}\``);
 			return res;
 		}
 
