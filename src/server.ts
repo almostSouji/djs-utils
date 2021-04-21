@@ -10,7 +10,7 @@ import { mdnSearch } from './interactions/mdnDocs';
 import { nodeSearch } from './interactions/nodeDocs';
 import polka, { NextHandler, Request, Response } from 'polka';
 import { jsonParser } from './util/jsonParser';
-import { prepareAck, prepareResponse } from './util/respond';
+import { prepareResponse } from './util/respond';
 import chalk from 'chalk';
 
 
@@ -68,10 +68,11 @@ export async function start(vars: Runvariables) {
 					return res.end();
 				}
 
-				logger.warn(`Unknown interaction received: ${name}`);
-				prepareAck(res);
-				res.end();
+				logger.warn(`Unknown interaction received: ${chalk.yellow(name)} guild: ${chalk.yellow(message.guild_id)}`);
 			}
+			logger.warn(`Received interaction of type ${chalk.yellow(message.type)}`);
+			prepareResponse(res, `\`🐞${message.type}\` This shouldn't be there...`, true);
+			res.end();
 		})
 		.listen(vars.port);
 	logger.log('ok', `Listening for interactions on port ${chalk.green(vars.port)}`);
