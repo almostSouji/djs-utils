@@ -28,7 +28,7 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 
 		const linkReplaceRegex = /\[(.+?)\]\((.+?)\)/g;
 		const boldCodeBlockRegex = /`\*\*(.*)\*\*`/g;
-		const intro = hit.summary.replace(/\n/g, ' ')
+		const intro = hit.summary.replace(/\s+/g, ' ')
 			.replace(linkReplaceRegex, `[$1](${API_BASE}<$2>)`)
 			.replace(boldCodeBlockRegex, '**`$1`**');
 
