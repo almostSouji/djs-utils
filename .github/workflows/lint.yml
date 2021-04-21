@@ -8,10 +8,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Install Node v12
+      - name: Install Node v15
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 15
 
       - name: Install dependencies
         run: npm install
@@ -20,4 +20,4 @@ jobs:
         run: npm run lint
 
       - name: Run TSC
-        run: npm run build 
+        run: npm run build
