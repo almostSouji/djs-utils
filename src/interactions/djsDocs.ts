@@ -2,8 +2,8 @@ import { Response } from 'polka';
 import Doc from 'discord.js-docs';
 import { prepareResponse, prepareErrorResponse } from '../util/respond';
 
-const DJS_ICON = '<:djs:586438523796848640>';
-const DJS_ICON_MASTER = '<:djsmaster:818953388305809430>';
+const DJS_ICON = '<:djs:851213352314732544>';
+const DJS_ICON_MASTER = '<:djsdev:851213342541873182>';
 
 function escapeMDLinks(s: string): string {
 	return s.replace(/\[(.+?)\]\((.+?)\)/g, '[$1](<$2>)');
