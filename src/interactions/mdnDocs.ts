@@ -3,6 +3,7 @@ import { Response } from 'polka';
 import { logger } from '../util/logger';
 import { prepareErrorResponse, prepareResponse } from '../util/respond';
 import { encode } from 'querystring';
+import type { MDNResponse } from '../types/Interfaces';
 
 const API_BASE = 'https://developer.mozilla.org';
 const MDN_ICON = '<:mdn:818272565419573308>';
@@ -14,8 +15,12 @@ export async function mdnSearch(res: Response, query: string, target?: string): 
 		const qString = `${API_BASE}/api/v1/search?${encode({ q: query })}`;
 		let hit = cache.get(qString);
 		if (!hit) {
-			const result = await fetch(qString).then(r => r.json());
-			hit = result.documents?.[0];
+			const result: MDNResponse = await fetch(qString).then(r => r.json());
+			const docs = result.documents;
+			if (docs.length) {
+				hit = docs.find(doc => doc.title === query);
+				if (!hit) hit = docs[0];
+			}
 			cache.set(qString, hit);
 		}
 
