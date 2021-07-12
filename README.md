@@ -1,3 +1,10 @@
+# :information_source: Achievement notice
+
+The bot portion of this application is no longer running and the code base has been ported to a slash command only application which is maintained at https://github.com/discordjs/discord-utils-bot
+
+<details>
+<summary>archived README</summary>
+
 # About
 
 Utility bot for discord, to aid support and development with [discord.js](https://github.com/discordjs/discord.js). Tags are deliberately only occasionally mirrored from the discord.js server. A feature to modify tags is not planned.
@@ -128,3 +135,5 @@ Try to build the project as well, so the typescript code is compiled and checked
 Authored and maintained by almostSouji.
 
 > GitHub [@almostSouji](https://github.com/almostSouji)
+
+</details>
